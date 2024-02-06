@@ -23,15 +23,15 @@ export default async function Blocks() {
   recentBlocks.unshift(lastBlock)
 
   return (
-    <div className="grid min-h-screen place-items-center">
+    <div className="grid min-h-screen place-items-center p-10 bg-dots ml-4">
       {/* Latest Blocks table */}
-      <div className="col-span-2 lg:col-span-1 w-full p-20 py-10">
+      <div className="col-span-2 lg:col-span-1 w-full bg-dark/90 border border-light/10 rounded-md p-8">
         <div className="flex justify-between items-baseline">
-          <h3 className="text-xl font-bold">Latest Blocks</h3>
-          <Link className="text-blue-500" href={'/blocks/'}>See More</Link>
+          <h3 className="text-2xl font-bold text-cyan/80 mb-4">Latest Blocks</h3>
+          {/* <Link className="text-yellow hover:text-yellow/50" href={'/blocks/'}>See More</Link> */}
         </div>
 
-        <table className="min-w-full bg-white border border-gray-300 mt-5">
+        <table className="min-w-full bg-black border border-light">
           <thead>
             <tr>
               <th className="py-2 px-4 border-b text-left">Height</th>
@@ -44,8 +44,8 @@ export default async function Blocks() {
           <tbody>
             {recentBlocks.map(block => 
               <tr key={block.block_id}>
-                <td className="py-2 px-4 border-b"><Link className="text-blue-500" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></td>
-                <td className="py-2 px-4 border-b"><Link className="text-blue-500" href={`/validators/${block.header.proposer_address}`}>{truncateHash(block.header.proposer_address)}</Link></td>
+                <td className="py-2 px-4 border-b"><Link className="text-yellow hover:text-yellow/50" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></td>
+                <td className="py-2 px-4 border-b"><Link className="text-yellow hover:text-yellow/50" href={`/validators/${block.header.proposer_address}`}>{truncateHash(block.header.proposer_address)}</Link></td>
                 <td className="py-2 px-4 border-b">{truncateHash(block.block_id)}</td>
                 <td className="py-2 px-4 border-b">{block.tx_hashes.length}</td>
                 <td className="py-2 px-4 border-b">{timeAgo(block.header.time)}</td>

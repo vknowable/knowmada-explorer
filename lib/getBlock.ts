@@ -1,3 +1,4 @@
+// TODO: all fetch functions need error handling
 export async function getLastBlock() {
   const url = process.env.NEXT_PUBLIC_API_URL
   const response = await fetch(`${url}/block/last`)

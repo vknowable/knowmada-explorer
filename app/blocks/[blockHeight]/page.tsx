@@ -31,64 +31,52 @@ export default async function page({ params: { blockHeight } }: Props) {
     })
   }
 
-  // const date = new Date(block.header.time)
-  // const formattedDate = date.toLocaleString('en-US', {
-  //   year: 'numeric',
-  //   month: 'short',
-  //   day: '2-digit',
-  //   hour: '2-digit',
-  //   minute: '2-digit',
-  //   second: '2-digit',
-  //   timeZone: 'UTC',
-  // })
   const formattedDate = humanizedTime(block.header.time)
 
-
-
   return (
-    <div className="grid min-h-screen place-items-center">
-      <div className="flex flex-col gap-10 text-left w-[75%] px-20 py-10">
+    <div className="grid min-h-screen place-items-center bg-dots ml-4">
+      <div className="flex flex-col gap-10 text-left w-[75%] px-8 py-10">
 
         {/* Overview */}
-        <div className="bg-slate-700 p-4">
-          <h3 className="text-xl font-bold border-b-[1px] border-b-white/50 mt-5">Block Details</h3>
-          <div className="flex flex-col">
-            <div className="flex justify-between border-b-[1px] border-b-white/20 mt-5">
-              <div>Height:</div>
+        <div className="p-4">
+          <h3 className="text-2xl font-bold text-cyan/80 mb-4">Block Details</h3>
+          <div className="flex flex-col bg-dark/90 border border-light/10 rounded-md p-8">
+            <div className="flex justify-between border-b-[1px] border-b-white/10">
+              <div className="font-bold text-md">Height:</div>
               <div>{block.header.height}</div>
             </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/20 mt-5">
-              <div>Hash:</div>
+            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
+              <div className="font-bold text-md">Hash:</div>
               <div>{block.block_id}</div>
             </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/20 mt-5">
-              <div>Proposer:</div>
+            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
+              <div className="font-bold text-md">Proposer:</div>
               <div>{block.header.proposer_address}</div>
             </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/20 mt-5">
-              <div>Time:</div>
+            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
+              <div className="font-bold text-md">Time:</div>
               <div>{formattedDate}</div>
             </div>
           </div>
         </div>
 
         {/* Signatures */}
-        <div className="bg-slate-700 p-4">
-          <h3 className="text-xl font-bold border-b-[1px] border-b-white/50 mt-5">Signatures</h3>
-          <div className="flex flex-col">
+        <div className="p-4">
+          <h3 className="text-2xl font-bold text-cyan/80 mb-4">Signatures</h3>
+          <div className="flex flex-col bg-dark/90 border border-light/10 rounded-md p-8">
             {tendermintBlock.result.block.last_commit.signatures.map(signature =>
-              <div key={signature.validator_address} className="mt-2 border-b-[1px] border-b-white/20">{signature.validator_address}</div>)}
+              <div key={signature.validator_address} className="border-b-[1px] border-b-white/10 mt-4">{signature.validator_address}</div>)}
           </div>
         </div>
 
         {/* Transactions */}
-        <div className="bg-slate-700 p-4">
-          <h3 className="text-xl font-bold border-b-[1px] border-b-white/50 mt-5">Transactions</h3>
-          <div className="grid min-h-screen place-items-center">
+        <div className="p-4">
+          <h3 className="text-2xl font-bold text-cyan/80 mb-4">Transactions</h3>
+          <div className="grid min-h-screen place-items-center bg-dark/90 border border-light/10 rounded-md p-8">
             {/* Latest Transactions table */}
 
 
-            <table className="min-w-full bg-white border border-gray-300 mt-5">
+            <table className="min-w-full bg-black border border-light">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b text-left">Block</th>
@@ -101,9 +89,9 @@ export default async function page({ params: { blockHeight } }: Props) {
               <tbody>
                 {blockTxs.map(tx =>
                   <tr key={tx.hash_id}>
-                    <td className="py-2 px-4 border-b"><Link className="text-blue-500" href={`/blocks/${tx.height}`}>{tx.height}</Link></td>
-                    <td className="py-2 px-4 border-b"><Link className="text-blue-500" href={`/transactions/${tx.hash_id}`}>{truncateHash(tx.hash_id, 12, 12)}</Link></td>
-                    <td className="py-2 px-4 border-b">{tx.tx_type}</td>
+                    <td className="py-2 px-4 border-b"><Link className="text-yellow hover:text-yellow/50" href={`/blocks/${tx.height}`}>{tx.height}</Link></td>
+                    <td className="py-2 px-4 border-b"><Link className="text-yellow hover:text-yellow/50" href={`/transactions/${tx.hash_id}`}>{truncateHash(tx.hash_id, 12, 12)}</Link></td>
+                    <td className="py-2 px-4 border-b text-cyan/60">{tx.tx_type}</td>
                     <td className="py-2 px-4 border-b">{tx.result}</td>
                     <td className="py-2 px-4 border-b">{timeAgo(tx.time)}</td>
                   </tr>

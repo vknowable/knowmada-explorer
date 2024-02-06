@@ -1,0 +1,3 @@
+type ChainParams = {
+  params: string,
+}

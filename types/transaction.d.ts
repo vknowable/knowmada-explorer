@@ -116,12 +116,12 @@ type EthPoolBridge = {
 }
 
 type Ibc = {
-  msg_transfer?: {
+  MsgTransfer?: {
     type_url: string,
-    value: string[],
+    value: number[],
   },
-  any?: {
+  Any?: {
     type_url: string,
-    value: string[],
+    value: number[],
   },
 }
