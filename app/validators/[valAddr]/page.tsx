@@ -56,10 +56,11 @@ export default async function page({ params: { valAddr } }: Props) {
             </div>
           </div>
 
-          <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-            <div className="font-bold text-md">Description:</div>
-            <div>{valInfo.metadata?.description ?? ""}</div>
+          <div className="flex flex-col justify-between my-4 pb-4 border-b-4 border-white/20">
+            <div className="text-sm tracking-wider text-white/40">Description:</div>
+            <div className="ml-2">{valInfo.metadata?.description ?? ""}</div>
           </div>
+
           <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
             <div className="font-bold text-md">Website:</div>
             <div>{valInfo.metadata?.website ?? ""}</div>
