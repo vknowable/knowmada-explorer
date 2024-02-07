@@ -3,9 +3,10 @@ import Image from "next/image";
 
 type Props = {
   chainId: string,
+  epoch: number,
 }
 
-export default function Header({ chainId }: Props) {
+export default function Header({ chainId, epoch }: Props) {
   
   return (
     <nav className="bg-black p-4 py-8 drop-shadow-xl z-10 border-b-2 border-light min-h-40 flex items-end">
@@ -15,8 +16,9 @@ export default function Header({ chainId }: Props) {
           <Searchbar />
         </div>
         <div className="flex flex-col items-start">
-          <div className="text-md font-bold text-white">Chain-id:</div>
+          <div className="text-md font-normal text-white">Chain-id:</div>
           <div className="text-sm text-yellow" style={{ whiteSpace: 'nowrap' }}>{chainId}</div>
+          <div className="text-sm font-light text-white mt-2 flex items-baseline">Current Epoch:<span className="text-sm font-light text-yellow ml-2">{epoch}</span></div>
         </div>
       </div>
     </nav>
