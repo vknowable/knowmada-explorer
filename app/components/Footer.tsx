@@ -1,9 +1,9 @@
-import Image from "next/image";
-
 export default function Footer() {
   return (
-    <div className="h-full w-full bg-cyan/10  p-10 lg:p-20 pt-20 pb-2">
-      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8">
+    <div className="h-full w-full bg-black/30 p-10 lg:p-20 pt-20 pb-2">
+      <div className="text-center"><span className="font-bold text-lg tracking-wider text-white">Knowmada</span> — by Knowable 2024</div>
+      <div className="text-center text-lg">(Work in progress)</div>
+      {/* <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8">
         <div>
           <Image className="h-auto"
               src="/assets/knowable-logo.png"
@@ -36,7 +36,7 @@ export default function Footer() {
       </div>
       <div className="mt-10 text-white/80">
         by Knowable -- 2024
-      </div>
+      </div> */}
     </div>
   )
 }

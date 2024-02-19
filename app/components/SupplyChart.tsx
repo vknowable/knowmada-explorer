@@ -31,12 +31,12 @@ export default function SupplyChart({ bonded, total }: Props) {
           {
             data: [bondedSupply, unbondedSupply],
             backgroundColor: [
-              'rgba(0, 255, 255, 0.2)',
-              'rgba(255, 255, 0, 0.2)',
+              'rgba(0, 255, 255, 0.6)',
+              'rgba(255, 255, 0, 0.6)',
             ],
             borderColor: [
-              'rgba(0, 255, 255, 1)',
-              'rgba(255, 255, 0, 1)',
+              'rgba(0, 255, 255, 0.8)',
+              'rgba(255, 255, 0, 0.8)',
             ],
             borderWidth: 1,
           },

@@ -19,7 +19,7 @@ export default async function Governance() {
           <h3 className="text-2xl font-bold text-cyan/80 mb-4">Proposals</h3>
           <div className="mb-4 text-sm">A total of {proposals.proposals.length} proposals found</div>
 
-          {proposals.proposals.map(proposal => {
+          {proposals.proposals.reverse().map(proposal => {
           // TODO: Passed/Failed status instead of Finalized
           let status = "n/a"
           let color = ""
@@ -34,6 +34,7 @@ export default async function Governance() {
             <div className="flex min-w-full justify-between items-end border-b-2 border-light pb-2 mb-4">
               <div className="text-lg font-bold text-left"><span className="text-sm text-white/60 mr-1">#</span>{proposal.id}</div>
               <div className="grow pl-8"><Link className="text-yellow hover:text-yellow/50 text-lg font-bold text-left" href={`/governance/${proposal.id}`}>{proposal.content.title}</Link></div>
+              <div className="mx-4 text-white/50">{Object.keys(proposal.type)[0]}</div>
               <div className={`text-sm text-center border ${color} rounded-md p-2 py-1`}>{status}</div>
             </div>
 

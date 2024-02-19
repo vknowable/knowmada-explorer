@@ -33,3 +33,12 @@ type Default = {
 type ProposalsList = {
   proposals: ProposalInfo[],
 }
+
+type ProposalResult = {
+  result: string,
+  tally_type: string,
+  total_voting_power: string,
+  total_yay_power: string,
+  total_nay_power: string,
+  total_abstain_power: string,
+}

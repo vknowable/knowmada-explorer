@@ -1,8 +1,11 @@
 import { getBlockByHash } from "@/lib/getBlock"
 import { getTransaction } from "@/lib/getTransaction"
 import { humanizedTime } from "@/lib/helpers"
-
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import InfoRow from "@/app/components/InfoRow"
 
 type Props = {
   params: {
@@ -20,68 +23,52 @@ export default async function page({ params: { txHash: hash } }: Props) {
 
   // get a more descriptive name than 'Decrypted', ie: Transfer, Bond, etc.
   const txType: string = tx.tx === null ? "Wrapper" : Object.keys(tx.tx)[0]
-
-  // the contents of the tx, if not a wrapper type
-  // TODO: tx types with nested fields, eg Ibc, UpdateStewardCommission? will break this
-  // TODO: Ibc messages contain what looks like a protobuf message, would need to be deserialized to get any info
-  let txContent = <div className="flex justify-between border-b-[1px] border-b-white/10 mt-4">n/a</div>
-  if (tx.tx !== null) {
-    const txObject = Object.values(tx.tx)[0]
-    const txDestructured = Object.entries(txObject)
-    txContent =
-    <>
-      {txDestructured.map( ([key, value]) => (
-        <div key={key} className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-          <div className="font-bold text-md">{(key as string)[0].toUpperCase()+(key as string).substring(1)}:</div>
-          <div>{value as string}</div>
-        </div>
-      ))}
-    </>
-  }
+  const txMemo: string = tx.memo ?? ""
 
   return (
-    <div className="grid min-h-screen place-items-center bg-dots ml-4">
-      <div className="flex flex-col gap-10 text-left w-[75%] px-8 py-10">
+    <div className="grid place-items-center mb-12">
+      <Card className="w-[80%] mt-8">
+        <CardHeader>
+          <CardTitle>Transaction Details:</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="invisible h-0"></TableHead>
+                <TableHead className="invisible h-0"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <InfoRow a="Hash:" b={tx.hash} />
+              <TableRow>
+                <TableCell>Height:</TableCell>
+                <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></TableCell>
+              </TableRow>
+              <InfoRow a="Time:" b={formattedDate} />
+              <TableRow>
+                <TableCell>Type:</TableCell>
+                <TableCell><Badge>{txType}</Badge></TableCell>
+              </TableRow>
+              {/* <InfoRow a="Result" b="Ok" /> */}
+              <InfoRow a="Memo:" b={txMemo} />
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
 
-        {/* Overview */}
-        <div className="p-4">
-          <h3 className="text-2xl font-bold text-cyan/80 mb-4">Transaction Details:</h3>
-          <div className="flex flex-col bg-dark/90 border border-light/10 rounded-md p-8">
-            <div className="flex justify-between border-b-[1px] border-b-white/10">
-              <div className="font-bold text-md">Hash</div>
-              <div>{tx.hash}</div>
-            </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-              <div className="font-bold text-md">Height:</div>
-              <div><Link className="text-yellow hover:text-yellow/50" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></div>
-            </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-              <div className="font-bold text-md">Time:</div>
-              <div>{formattedDate}</div>
-            </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-              <div className="font-bold text-md">Type:</div>
-              <div>{txType}</div>
-            </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-              <div className="font-bold text-md">Result:</div>
-              <div>Ok</div> {/*TODO: how to find this correctly*/}
-            </div>
-            <div className="flex justify-between border-b-[1px] border-b-white/10 mt-8">
-              <div className="font-bold text-md">Memo:</div>
-              <div>(Not supported yet)</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Contents */}
-        <div className="p-4">
-          <h3 className="text-2xl font-bold text-cyan/80 mb-4">Contents:</h3>
-          <div className="flex flex-col bg-dark/90 border border-light/10 rounded-md p-8 pt-0">
-            {txContent}
-          </div>
-        </div>
-      </div>
+      <Card className="w-[80%] mt-8">
+        <CardHeader>
+          <CardTitle>Contents:</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Card className="pt-8">
+            <CardContent>
+              <pre>{JSON.stringify(tx.tx, null, 2)}</pre>
+            </CardContent>
+          </Card>
+        </CardContent>
+      </Card>
     </div>
   )
 }

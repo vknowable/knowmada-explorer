@@ -1,26 +1,36 @@
 import Searchbar from "./Searchbar";
-import Image from "next/image";
+import ChainId from "./ChainId";
+import Link from "next/link";
 
-type Props = {
-  chainId: string,
-  epoch: number,
-}
+export default function Header() {
 
-export default function Header({ chainId, epoch }: Props) {
-  
   return (
-    <nav className="bg-black p-4 py-8 drop-shadow-xl z-10 border-b-2 border-light min-h-40 flex items-end">
-      <div className="flex justify-between items-end w-full gap-14">
-        <div className="h-20 min-w-72 bg-cover bg-no-repeat bg-bottom bg-logo-wordmark" style={{ backgroundSize: "contain", }}></div>
-        <div className="w-full">
-          <Searchbar />
+    // <nav className="bg-black p-4 py-8 drop-shadow-xl z-10 border-b-2 border-light min-h-40 flex items-end min-w-full">
+    //   <div className="flex justify-between items-end w-full">
+    <div className="flex justify-between items-end w-full bg-black/30 p-4 px-8 border-b-2 border-light drop-shadow-xl z-10 gap-12">
+
+      <Link href="/" className="flex flex-col items-center justify-center">
+        <div className="flex justify-center gap-3 w-full">
+          <div className="min-h-5 min-w-5 bg-nam01 animate-bounce animation-delay-300 opacity-60"></div>
+          <div className="min-h-5 min-w-5 bg-nam02 animate-bounce animation-delay-600 opacity-60"></div>
+          <div className="min-h-5 min-w-5 bg-nam03 animate-bounce animation-delay-400 opacity-60"></div>
+          <div className="min-h-5 min-w-5 bg-nam04 animate-bounce animation-delay-150 opacity-60"></div>
+          <div className="min-h-5 min-w-5 bg-nam05 animate-bounce animation-delay-500 opacity-60"></div>
+          <div className="min-h-5 min-w-5 bg-nam06 animate-bounce animation-delay-200 opacity-60"></div>
         </div>
-        <div className="flex flex-col items-start">
-          <div className="text-md font-normal text-white">Chain-id:</div>
-          <div className="text-sm text-yellow" style={{ whiteSpace: 'nowrap' }}>{chainId}</div>
-          <div className="text-sm font-light text-white mt-2 flex items-baseline">Current Epoch:<span className="text-sm font-light text-yellow ml-2">{epoch}</span></div>
-        </div>
+        <div className="mt-2 text-white text-center text-lg font-bold tracking-wide">Knowmada Explorer</div>
+        <div className="text-center w-full text-white/50 text-center text-xs">by Knowable ( beta )</div>
+      </Link>
+
+
+      {/* <div className="h-20 min-w-72 bg-cover bg-no-repeat bg-bottom bg-logo-wordmark border border-red-500" style={{ backgroundSize: "contain", }}></div> */}
+      <div className="w-full flex flex-col justify-end items-center">
+        <div className="h-20 min-w-72 bg-cover bg-no-repeat bg-bottom bg-logo-wordmark mb-4" style={{ backgroundSize: "contain", }}></div>
+        <Searchbar />
       </div>
-    </nav>
+      <ChainId />
+    </div>
+    //   </div>
+    // </nav>
   )
 }

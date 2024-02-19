@@ -1,5 +1,7 @@
 import { bech32m } from "bech32"
 
+export const NATIVE_SCALE = 1000000
+
 export function truncateHash(hash: string, prefixLength: number = 4, suffixLength: number = 4): string {
   if (hash.length <= prefixLength + suffixLength) {
     return hash; // No need to truncate if the hash is already short
@@ -53,6 +55,12 @@ export function validateAddress(address: string): boolean {
   } catch (error) {
     return false
   }
+}
+
+export function validateTmAddress(address: string): boolean {
+  // check if valid hex string of length 40
+  const hexRegex = /^[0-9A-Fa-f]+$/g
+  return hexRegex.test(address) && address.length === 40
 }
 
 export function validateHash(hash: string): boolean {

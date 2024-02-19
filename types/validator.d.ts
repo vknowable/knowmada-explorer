@@ -27,6 +27,11 @@ type ConsensusSetResponse = {
   consensus_count: number,
   below_capacity_count: number,
   consensus_set: ValidatorInfo[],
+  pagination: {
+    page: number,
+    per_page: number,
+    total: number,
+  }
 }
 
 type BondList = {

@@ -36,5 +36,15 @@ type BlockResponse = {
       }
     }
   },
-  tx_hashes: TxSimple[]
+  tx_hashes: TxSimple[],
+  epoch: number | null,
+}
+
+type SignaturesResponse = {
+  block_id: string,
+  signatures: Signature[],
+}
+
+type Signature = {
+  validator_address: string,
 }
