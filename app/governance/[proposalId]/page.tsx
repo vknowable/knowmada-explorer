@@ -1,7 +1,10 @@
 import { getProposal, getProposalResult } from "@/lib/getProposal"
 import { getLastEpoch } from "@/lib/getChainStatus"
-import Link from "next/link"
 import TallyChart from "@/app/components/TallyChart"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
 
 type Props = {
   params: {
@@ -11,49 +14,57 @@ type Props = {
 
 export default async function page({ params: { proposalId } }: Props) {
 
-  const proposalData: Promise<ProposalInfo> = getProposal(parseInt(proposalId))
-  const proposal = await proposalData
+  // const proposalData: Promise<ProposalInfo> = getProposal(parseInt(proposalId))
+  // const proposal = await proposalData
 
-  const proposalResultData: Promise<ProposalResult> = getProposalResult(parseInt(proposalId))
-  const proposalResult = await proposalResultData
+  // const proposalResultData: Promise<ProposalResult> = getProposalResult(parseInt(proposalId))
+  // const proposalResult = await proposalResultData
 
-  const epochData: Promise<EpochResponse> = getLastEpoch()
-  const epoch = await epochData
+  // const epochData: Promise<EpochResponse> = getLastEpoch()
+  // const epoch = await epochData
+
+  const [proposal, proposalResult, epoch] = await Promise.all([
+    getProposal(parseInt(proposalId)),
+    getProposalResult(parseInt(proposalId)),
+    getLastEpoch()
+  ])
 
   const yay = parseInt(proposalResult.total_yay_power)
   const nay = parseInt(proposalResult.total_nay_power)
   const abstain = parseInt(proposalResult.total_abstain_power)
   const total = parseInt(proposalResult.total_voting_power)
-  const no_vote = total - (yay+nay+abstain)
+  const no_vote = total - (yay + nay + abstain)
 
   // result "passed/rejected" only applies if voting is done, otherwise it will always say "rejected" by default
   let status = "n/a"
   let color = ""
-  if (epoch.epoch < proposal.voting_start_epoch) { status = "Upcoming"; color = "bg-yellow-500/40 border-yellow-600"; }
-  if (epoch.epoch >= proposal.voting_start_epoch && epoch.epoch <= proposal.voting_end_epoch) { status = "Voting"; color = "bg-orange-500/40 border-orange-600"; }
+  if (epoch.epoch < proposal.voting_start_epoch) { status = "Upcoming"; color = "bg-[#cccc00] hover:bg-[#9e9e00] text-zinc-900"; }
+  if (epoch.epoch >= proposal.voting_start_epoch && epoch.epoch <= proposal.voting_end_epoch) { status = "Voting"; color = "bg-[#00baba] hover:bg-[#02544c] text-zinc-900 animate-pulse"; }
   if (epoch.epoch > proposal.voting_end_epoch && epoch.epoch <= proposal.grace_epoch) {
-    if (proposalResult.result === 'passed') { status = "Passed (Grace period)"; color = "bg-green-500/40 border-green-600"; }
-    else { status = "Rejected"; color = "bg-red-500/40 border-red-600"; }
+    if (proposalResult.result === 'passed') { status = "Passed (Grace period)"; color = "bg-[#00e800] hover:bg-[#00b500] text-zinc-900"; }
+    else { status = "Rejected"; color = "bg-[#d10000] hover:bg-[#a10000] text-zinc-200"; }
   }
   if (epoch.epoch > proposal.grace_epoch) {
-    if (proposalResult.result === 'passed') { status = "Passed"; color = "bg-green-500/40 border-green-600"; }
-    else { status = "Rejected"; color = "bg-red-500/40 border-red-600"; }
+    if (proposalResult.result === 'passed') { status = "Passed"; color = "bg-[#00e800] hover:bg-[#00b500] text-zinc-900"; }
+    else { status = "Rejected"; color = "bg-[#d10000] hover:bg-[#a10000] text-zinc-200"; }
   }
 
   return (
-    <div className="grid min-h-screen place-items-center bg-dots ml-4">
-      <div className="flex flex-col gap-10 text-left w-[75%] px-8 py-10">
-
-        <div key={proposal.id} className="flex flex-col bg-dark/90 border border-light/10 rounded-md p-8 mb-8">
-
-          <div className="flex min-w-full justify-between items-end border-b-2 border-light pb-2 mb-4">
-            <div className="text-lg font-bold text-left"><span className="text-sm text-white/60 mr-1">#</span>{proposal.id}</div>
-            <div className="grow pl-8"><Link className="text-yellow hover:text-yellow/50 text-lg font-bold text-left" href={`/governance/${proposal.id}`}>{proposal.content.title}</Link></div>
-            <div className="mx-4 text-white/50">{Object.keys(proposal.type)[0]}</div>
-            <div className={`text-sm text-center border ${color} rounded-md p-2 py-1`}>{status}</div>
+    <div className="grid place-items-center mb-12">
+      <Card className="w-[80%] mt-8">
+        <CardHeader className="flex flex-row justify-between items-baseline gap-4">
+          <div className="text-lg"><span className="text-sm text-white/60 mr-1">#</span>{proposal.id}</div>
+          <CardTitle>{proposal.content.title}</CardTitle>
+          <div className="flex flex-row gap-4 items-baseline">
+            <CardDescription>{Object.keys(proposal.type)[0]}</CardDescription>
+            <Badge className={`p-2 px-4 text-white ${color}`} style={{ whiteSpace: 'nowrap' }}>{status}</Badge>
           </div>
+        </CardHeader>
 
-          <div className="flex flex-col mb-4">
+        <CardContent>
+          <Separator />
+
+          <div className="flex flex-col my-4">
             <div className="text-sm tracking-wider text-white/40">Summary:</div>
             <div className="ml-2">{proposal.content.abstract ?? "n/a"}</div>
           </div>
@@ -78,27 +89,58 @@ export default async function page({ params: { proposalId } }: Props) {
             <div className="ml-2">{proposal.grace_epoch ?? "n/a"}</div>
           </div>
 
-          <div className="flex min-w-full justify-between items-end border-t-2 border-light/30 py-2 mb-4 text-lg">Tally:</div>
-            <div className="flex justify-around items-center">
-              <TallyChart yay={yay} nay={nay} abstain={abstain} total={total} />
-              <div className="flex flex-col">
-                <div className="flex justify-between min-w-full text-lg border-b border-light/30 mb-2"><span>Quroum:</span>{proposalResult.tally_type}</div>
-                <div className="flex justify-between min-w-full"><span className="text-green-500/60 mr-4">Yay:</span>{yay} ( {(yay/total * 100).toFixed(4)}% )</div>
-                <div className="flex justify-between min-w-full"><span className="text-red-500/60 mr-4">Nay:</span>{nay} ( {(nay/total * 100).toFixed(4)}% )</div>
-                <div className="flex justify-between min-w-full"><span className="text-[#0DD]/60 mr-4">Abstain:</span>{abstain} ( {(abstain/total * 100).toFixed(4)}% )</div>
-                <div className="flex justify-between min-w-full"><span className="text-white/60 mr-4">No Vote:</span>{no_vote} ( {(no_vote/total * 100).toFixed(4)}% )</div>
-              </div>
-            </div>
+          <Separator />
+          <div className="flex min-w-full justify-between items-end py-2 mb-4 text-lg mt-2">Tally:</div>
+          <div className="flex justify-around items-center gap-24">
+            <TallyChart yay={yay} nay={nay} abstain={abstain} total={total} />
+            <Table>
+              <TableCaption><span className="mr-4">Required quroum:</span>{proposalResult.tally_type}</TableCaption>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="text-[#86e386]">Yay:</TableCell>
+                  <TableCell>{yay}</TableCell>
+                  <TableCell>{(yay / total * 100).toFixed(4)} %</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="text-[#e04848]">Nay:</TableCell>
+                  <TableCell>{nay}</TableCell>
+                  <TableCell>{(nay / total * 100).toFixed(4)} %</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="text-[#4277f5]">Abstain:</TableCell>
+                  <TableCell>{abstain}</TableCell>
+                  <TableCell>{(abstain / total * 100).toFixed(4)} %</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="text-zinc-500">No Vote:</TableCell>
+                  <TableCell>{no_vote}</TableCell>
+                  <TableCell>{(no_vote / total * 100).toFixed(4)} %</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
 
-          <div className="flex min-w-full justify-between items-end border-t-2 border-light/30 py-2 mb-4 text-lg">Content:</div>
-          <pre className="mb-8">{JSON.stringify(proposal.type, null, 2)}</pre>
-          <div className="flex min-w-full justify-between items-end border-t-2 border-light/30 py-2 mb-4 text-lg">Votes:</div>
-          <div>tnam.... | yay/nay</div>
+      <Card className="w-[80%] mt-8">
+        <CardHeader>
+          <CardTitle>Content:</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Card className="pt-8">
+            <CardContent>
+              <pre>{JSON.stringify(proposal.type, null, 2)}</pre>
+            </CardContent>
+          </Card>
+        </CardContent>
+      </Card>
 
-
-        </div>
-
-      </div>
+      <Card className="w-[80%] mt-8">
+        <CardHeader>
+          <CardTitle>Votes:</CardTitle>
+          <CardDescription>Not supported yet</CardDescription>
+        </CardHeader>
+      </Card>
     </div>
   )
 }

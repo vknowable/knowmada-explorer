@@ -59,7 +59,7 @@ export default async function page({ params: { txHash: hash } }: Props) {
 
       <Card className="w-[80%] mt-8">
         <CardHeader>
-          <CardTitle>Contents:</CardTitle>
+          <CardTitle>Content:</CardTitle>
         </CardHeader>
         <CardContent>
           <Card className="pt-8">

@@ -31,16 +31,16 @@ export default function TallyChart({ yay, nay, abstain, total }: Props) {
           {
             data: [yay, nay, abstain, no_vote],
             backgroundColor: [
-              'rgba(0, 255, 0, 0.2)',
-              'rgba(255, 0, 0, 0.2)',
-              'rgba(0, 255, 255, 0.2)',
+              'rgba(59, 168, 59, 0.8)',
+              'rgba(171, 41, 41, 0.8)',
+              'rgba(51, 83, 158, 0.8)',
               'rgba(100, 100, 100, 0.2)',
             ],
             borderColor: [
-              'rgba(0, 255, 0, 0.2)',
-              'rgba(255, 0, 0, 0.2)',
-              'rgba(0, 255, 255, 0.2)',
-              'rgba(100, 100, 100, 0.2)',
+              'rgba(59, 168, 59, 1)',
+              'rgba(171, 41, 41, 1)',
+              'rgba(51, 83, 158, 1)',
+              'rgba(100, 100, 100, 0.8)',
             ],
             borderWidth: 1,
           },

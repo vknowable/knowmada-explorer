@@ -86,6 +86,8 @@ const config: Config = {
         'nam04': "url('/assets/Nam_04.svg')",
         'nam05': "url('/assets/Nam_05.svg')",
         'nam06': "url('/assets/Nam_06.svg')",
+        'nam07': "url('/assets/Nam_07.svg')",
+        'nam08': "url('/assets/Nam_08.svg')",
       },
       backgroundSize: {
         'dots': '40%',
@@ -110,6 +112,7 @@ const config: Config = {
   plugins: [
     require("tailwindcss-animation-delay"),
     require("tailwindcss-animate"),
+    require('tailwind-scrollbar'),
   ],
 };
 export default config;
