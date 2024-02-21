@@ -55,7 +55,7 @@ export default function Footer() {
       </div>
     </div>
 
-    <div className="bg-primary/10 py-4 text-zinc-400">
+    <div className="bg-[#033] py-4 text-zinc-400">
       <div className="container mx-auto px-4">
         <div className="-mx-4 flex flex-wrap justify-between">
           <div className="px-4 w-full text-center sm:w-auto sm:text-left">
