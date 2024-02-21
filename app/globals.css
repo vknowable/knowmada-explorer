@@ -15,9 +15,6 @@
 
 @layer base {
   :root {
-    /* Name: custom color palette
-       Author: Ilias Ism
-       URL: https://gradient.page */
 
     /* CSS: .bg-gradient { background: var(--gradient) } */
     --gradient: #FFE000;
@@ -31,7 +28,7 @@
     --popover: 56 45% 6.5%;
     --popover-foreground: 56 10% 97.5%;
 
-    --card: 180 75% 4%;
+    --card: 180, 75%, 8%, 0.1;
     --card-foreground: 56 10% 97.5%;
 
     --border: 56 10% 35%;

@@ -36,7 +36,7 @@ export default async function Governance() {
         return (
           <Card className="w-[90%] mt-8" key={proposal.id}>
             <CardHeader className="flex flex-row justify-between items-baseline gap-4">
-              <div className="text-lg"><span className="text-sm text-white/60 mr-1">#</span>{proposal.id}</div>
+              <div className="text-lg"><span className="text-sm text-zinc-300 mr-1">#</span>{proposal.id}</div>
               <CardTitle><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/governance/${proposal.id}`}>{proposal.content.title}</Link></CardTitle>
               <div className="flex flex-row gap-4 items-baseline">
                 <CardDescription>{Object.keys(proposal.type)[0]}</CardDescription>
@@ -46,12 +46,12 @@ export default async function Governance() {
             <CardContent>
               <Separator />
               <div className="flex flex-col my-4">
-                <div className="text-sm tracking-wider text-white/40">Summary:</div>
+                <div className="text-sm tracking-wider text-zinc-500">Summary:</div>
                 <div className="ml-2">{proposal.content.abstract ?? "n/a"}</div>
               </div>
 
               <div>
-                <div className="text-sm tracking-wider text-white/40">Description:</div>
+                <div className="text-sm tracking-wider text-zinc-500">Description:</div>
                 <div className="ml-2">{proposal.content.details ?? "n/a"}</div>
               </div>
             </CardContent>

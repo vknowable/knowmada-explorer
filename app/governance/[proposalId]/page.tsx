@@ -53,7 +53,7 @@ export default async function page({ params: { proposalId } }: Props) {
     <div className="grid place-items-center mb-12">
       <Card className="w-[80%] mt-8">
         <CardHeader className="flex flex-row justify-between items-baseline gap-4">
-          <div className="text-lg"><span className="text-sm text-white/60 mr-1">#</span>{proposal.id}</div>
+          <div className="text-lg"><span className="text-sm text-zinc-300 mr-1">#</span>{proposal.id}</div>
           <CardTitle>{proposal.content.title}</CardTitle>
           <div className="flex flex-row gap-4 items-baseline">
             <CardDescription>{Object.keys(proposal.type)[0]}</CardDescription>
@@ -65,27 +65,27 @@ export default async function page({ params: { proposalId } }: Props) {
           <Separator />
 
           <div className="flex flex-col my-4">
-            <div className="text-sm tracking-wider text-white/40">Summary:</div>
+            <div className="text-sm tracking-wider text-zinc-500">Summary:</div>
             <div className="ml-2">{proposal.content.abstract ?? "n/a"}</div>
           </div>
 
           <div className="flex flex-col mb-4">
-            <div className="text-sm tracking-wider text-white/40">Description:</div>
+            <div className="text-sm tracking-wider text-zinc-500">Description:</div>
             <div className="ml-2">{proposal.content.details ?? "n/a"}</div>
           </div>
 
           <div className="flex flex-col mb-4">
-            <div className="text-sm tracking-wider text-white/40">Start Epoch:</div>
+            <div className="text-sm tracking-wider text-zinc-500">Start Epoch:</div>
             <div className="ml-2">{proposal.voting_start_epoch ?? "n/a"}</div>
           </div>
 
           <div className="flex flex-col mb-4">
-            <div className="text-sm tracking-wider text-white/40">End Epoch:</div>
+            <div className="text-sm tracking-wider text-zinc-500">End Epoch:</div>
             <div className="ml-2">{proposal.voting_end_epoch ?? "n/a"}</div>
           </div>
 
           <div className="flex flex-col mb-4">
-            <div className="text-sm tracking-wider text-white/40">Grace Epoch:</div>
+            <div className="text-sm tracking-wider text-zinc-500">Grace Epoch:</div>
             <div className="ml-2">{proposal.grace_epoch ?? "n/a"}</div>
           </div>
 
@@ -98,23 +98,23 @@ export default async function page({ params: { proposalId } }: Props) {
               <TableBody>
                 <TableRow>
                   <TableCell className="text-[#86e386]">Yay:</TableCell>
-                  <TableCell>{yay}</TableCell>
-                  <TableCell>{(yay / total * 100).toFixed(4)} %</TableCell>
+                  <TableCell className="text-zinc-300">{yay}</TableCell>
+                  <TableCell className="text-primary">{(yay / total * 100).toFixed(4)} %</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="text-[#e04848]">Nay:</TableCell>
-                  <TableCell>{nay}</TableCell>
-                  <TableCell>{(nay / total * 100).toFixed(4)} %</TableCell>
+                  <TableCell className="text-zinc-300">{nay}</TableCell>
+                  <TableCell className="text-primary">{(nay / total * 100).toFixed(4)} %</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="text-[#4277f5]">Abstain:</TableCell>
-                  <TableCell>{abstain}</TableCell>
-                  <TableCell>{(abstain / total * 100).toFixed(4)} %</TableCell>
+                  <TableCell className="text-zinc-300">{abstain}</TableCell>
+                  <TableCell className="text-primary">{(abstain / total * 100).toFixed(4)} %</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="text-zinc-500">No Vote:</TableCell>
-                  <TableCell>{no_vote}</TableCell>
-                  <TableCell>{(no_vote / total * 100).toFixed(4)} %</TableCell>
+                  <TableCell className="text-zinc-300">{no_vote}</TableCell>
+                  <TableCell className="text-primary">{(no_vote / total * 100).toFixed(4)} %</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

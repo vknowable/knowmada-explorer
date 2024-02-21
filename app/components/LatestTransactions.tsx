@@ -87,7 +87,7 @@ const Tx = ({ tx, fullView }: { tx: TxSummary, fullView: boolean }) => {
       <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${tx.height}`}>{tx.height}</Link></TableCell>
       <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/transactions/${tx.hash_id}`}>{fullView ? truncateHash(tx.hash_id, 8, 8) : truncateHash(tx.hash_id, 4, 4)}</Link></TableCell>
       <TableCell><Badge>{tx.tx_type}</Badge></TableCell>
-      <TableCell>{timeAgo(tx.time)}</TableCell>
+      <TableCell className="text-zinc-300">{timeAgo(tx.time)}</TableCell>
     </TableRow>
   )
 }

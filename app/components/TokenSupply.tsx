@@ -9,6 +9,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter }
 
 
 export default function TokenSupply() {
+  const nativeAlias = process.env.NEXT_PUBLIC_NATIVE_TOKEN_ALIAS ?? ""
 
   const [{ data, isPending, isError }] = useAtom(chainStatusAtom)
 
@@ -44,7 +45,7 @@ export default function TokenSupply() {
       <CardContent className="flex justify-between gap-24">
         <SupplyChart bonded={bonded} total={total}/>
         <Table>
-          <TableCaption>Native token: {data.staking_info.native_token}</TableCaption>
+          <TableCaption>Native token:<br /><span className="mr-4">{data.staking_info.native_token}</span>(<span className="text-primary mx-1">{nativeAlias}</span>)</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>
@@ -54,19 +55,19 @@ export default function TokenSupply() {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell>Bonded:</TableCell>
+              <TableCell className="text-zinc-300">Bonded:</TableCell>
               <TableCell className="text-right">{bonded_str}</TableCell>
-              <TableCell className="text-right">{(bonded/total * 100).toFixed(2)}</TableCell>
+              <TableCell className="text-right text-primary">{(bonded/total * 100).toFixed(2)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Unbonded:</TableCell>
+              <TableCell className="text-zinc-300">Unbonded:</TableCell>
               <TableCell className="text-right">{unbonded_str}</TableCell>
-              <TableCell className="text-right">{(unbonded/total * 100).toFixed(2)}</TableCell>
+              <TableCell className="text-right text-primary">{(unbonded/total * 100).toFixed(2)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Total:</TableCell>
+              <TableCell className="text-zinc-300">Total:</TableCell>
               <TableCell className="text-right">{total_str}</TableCell>
-              <TableCell className="text-right">100.00</TableCell>
+              <TableCell className="text-right text-primary">100.00</TableCell>
             </TableRow>
           </TableBody>
         </Table>

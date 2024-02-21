@@ -123,18 +123,18 @@ const ValidatorRow = ({ validator, bonded, index, currentPage, perPage }: { vali
 
   return (
     <TableRow>
-      <TableCell>{rank}</TableCell>
+      <TableCell className="text-zinc-300">{rank}</TableCell>
       <TableCell className="flex flex-row items-center gap-2">
         {/* <Image loading="lazy" alt="" src={avatarUrl} width="32" height="32" className="h-8 w-8 border-2 border-light/20 inline mr-4 rounded-full"></Image> */}
         <Avatar className="w-8 h-8">
-          <AvatarImage src={avatarUrl} alt="" className="border-2 border-yellow-200 rounded-full" loading="lazy" />
+          <AvatarImage src={avatarUrl} alt="" className="border-2 border-primary rounded-full" loading="lazy" />
           <AvatarFallback>Nam</AvatarFallback>
         </Avatar>
         <Link className="text-[#0DD] hover:text-[#0DD]/50 " href={`/validators/${validator.nam_address}`}>{truncateHash(validator.nam_address, 12, 12)}</Link>
       </TableCell>
-      <TableCell>{stake}</TableCell>
+      <TableCell className="text-zinc-300">{stake}</TableCell>
       <TableCell><Badge>{stakePercent} %</Badge></TableCell>
-      <TableCell>{commission} %</TableCell>
+      <TableCell className="text-zinc-300">{commission} %</TableCell>
       <TableCell className={uptimeColor}>{uptime} %</TableCell>
       <TableCell><Badge>{validator.state}</Badge></TableCell>
     </TableRow>

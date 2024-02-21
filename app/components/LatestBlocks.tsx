@@ -68,9 +68,9 @@ const Block = ({ block, fullView }: { block: BlockResponse, fullView: boolean })
     <TableRow>
       <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></TableCell>
       <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/validators/${block.header.proposer_address}`}>{fullView ? truncateHash(block.header.proposer_address, 8, 8) : truncateHash(block.header.proposer_address, 4, 4)}</Link></TableCell>
-      <TableCell>{fullView ? truncateHash(block.block_id, 8, 8) : truncateHash(block.block_id, 4, 4)}</TableCell>
-      <TableCell>{block.tx_hashes.length}</TableCell>
-      <TableCell>{timeAgo(block.header.time)}</TableCell>
+      <TableCell className="text-zinc-300">{fullView ? truncateHash(block.block_id, 8, 8) : truncateHash(block.block_id, 4, 4)}</TableCell>
+      <TableCell className="text-zinc-300">{block.tx_hashes.length}</TableCell>
+      <TableCell className="text-zinc-300">{timeAgo(block.header.time)}</TableCell>
     </TableRow>
   )
 }

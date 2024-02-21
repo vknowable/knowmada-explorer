@@ -10,7 +10,7 @@ export default function InfoRow({ a, b, align }: Props) {
   return (
     <TableRow>
       <TableCell>{a}</TableCell>
-      <TableCell className={align}>{b}</TableCell>
+      <TableCell className={`text-zinc-300 ${align}`}>{b}</TableCell>
     </TableRow>
   )
 }

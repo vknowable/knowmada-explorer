@@ -67,11 +67,11 @@ export default function ValInfo({ valAddr }: Props) {
         </CardHeader>
         <CardContent>
 
-          <Card className="mx-12 mt-4 p-12 border-2 bg-black/15">
+          <Card className="mx-12 mt-4 p-12 border-2 border-primary/30 bg-primary/5">
             <CardContent className="grid place-items-center">
               <div className="flex flex-row gap-24 items-center mt-8">
                 <Avatar className="w-48 h-48">
-                  <AvatarImage src={avatarUrl} alt="" className="border-2 border-yellow-200 rounded-full" loading="lazy" />
+                  <AvatarImage src={avatarUrl} alt="" className="border-2 border-primary rounded-full" loading="lazy" />
                   <AvatarFallback>Nam</AvatarFallback>
                 </Avatar>
                 <Table className="w-[60%]">

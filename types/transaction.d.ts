@@ -21,7 +21,7 @@ type TxResponse = {
   gas_limit_multiplier: number | null,
   code: string,
   data: string,
-  tx: Transfer|Bond|RevealPK|VoteProposal|BecomeValidator|Unbond|Withdraw|InitAccount|UpdateAccount|ResignSteward|UpdateStewardCommission|EthPoolBridge|Ibc|null,
+  tx: Transfer | Bond | RevealPK | VoteProposal | BecomeValidator | Unbond | Withdraw | InitAccount | UpdateAccount | ResignSteward | UpdateStewardCommission | EthPoolBridge | Ibc | null,
   memo: string | null,
 }
 
@@ -125,4 +125,17 @@ type Ibc = {
     type_url: string,
     value: number[],
   },
+}
+
+type ShieldedResponse = {
+  shielded_assets: ShieldedAssets,
+}
+
+type ShieldedAssets = {
+  [key: string]: number,
+}
+
+type AssetAmount = {
+  address: string,
+  amount: number,
 }

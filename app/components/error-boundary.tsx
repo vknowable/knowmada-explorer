@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button"
+
 export const ErrorBoundary = ({
   title = 'Something went wrong!',
   error,
@@ -13,17 +15,17 @@ export const ErrorBoundary = ({
   }
 
   return (
-    <div>
+    <div className="grid place-items-center mb-12 pt-12">
       <h2 className="mb-8">{title}</h2>
-      <button
+      <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
           resetHandler
         }
-        className="bg-zinc-50 w-fit text-black font-semibold rounded px-4 py-2 hover:bg-zinc-100 focus-within:bg-zinc-300 transition"
+        className=""
       >
         Try again
-      </button>
+      </Button>
     </div>
   )
 }

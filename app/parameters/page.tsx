@@ -28,11 +28,11 @@ export default async function Parameters() {
               <InfoRow a="Tx allowlist:" b={txAllowListString} align="text-right" /> */}
               <TableRow>
                 <TableCell>VP allowlist:</TableCell>
-                <TableCell className="text-right">{vpAllowListTrunc.map(vp => (<div key={vp}>{vp}<br></br></div>))}</TableCell>
+                <TableCell className="text-right text-zinc-300">{vpAllowListTrunc.map(vp => (<div key={vp}>{vp}<br></br></div>))}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Tx allowlist:</TableCell>
-                <TableCell className="text-right">{txAllowListTrunc.map(vp => (<div key={vp}>{vp}<br></br></div>))}</TableCell>
+                <TableCell className="text-right text-zinc-300">{txAllowListTrunc.map(vp => (<div key={vp}>{vp}<br></br></div>))}</TableCell>
               </TableRow>
               <InfoRow a="Max block gas:" b={chainParams.protocol_params.max_block_gas.toString()} align="text-right" />
             </TableBody>

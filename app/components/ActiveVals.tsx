@@ -14,7 +14,7 @@ export default function ActiveVals() {
         <CardTitle>Active Validators:</CardTitle>
         <CardContent className="pt-2 text-center">
           {isPending ? <div>Checking...</div>
-          : <div><span className="text-lg font-bold">{data.staking_info.active_validators}</span> out of <span className="text-lg font-bold">{data.staking_info.total_validators}</span></div>
+          : <div className="text-zinc-300"><span className="text-lg font-bold text-primary">{data.staking_info.active_validators}</span> out of <span className="text-lg font-bold text-primary">{data.staking_info.total_validators}</span></div>
           }
         </CardContent>
       </CardHeader>

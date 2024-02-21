@@ -13,7 +13,7 @@ export default function LatestBlock() {
         <CardTitle>Latest Block:</CardTitle>
         <CardContent className="pt-2 text-center">
           {isPending ? <div>Checking...</div>
-          : <div className="text-lg font-bold">{blockChainData?.pages[0][0].header.height}</div>
+          : <div className="text-lg font-bold text-primary">{blockChainData?.pages[0][0].header.height}</div>
           }
         </CardContent>
       </CardHeader>
