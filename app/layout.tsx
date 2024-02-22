@@ -34,7 +34,7 @@ export default async function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
       )}>
-      <div className="grid grid-cols-[auto,1fr,1fr] grid-rows-[auto,1fr,auto,auto] gap-0 min-h-screen bg-dots">
+      <div className="grid grid-cols-[auto,1fr,1fr] grid-rows-[auto,1fr,auto,auto] gap-0 min-h-screen">
         <div className="col-span-3 row-start-2 lg:col-span-1 lg:row-span-1 lg:row-start-2"><Navbar /></div>
         <div className="col-span-3 row-start-1 lg:col-span-3 lg:col-start-1 lg:row-start-1"><Header /></div>
         <div className="col-span-3 row-start-3 lg:col-span-2 lg:col-start-2 lg:row-start-2">{children}</div>

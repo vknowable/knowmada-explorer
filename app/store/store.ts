@@ -88,3 +88,56 @@ export const chainStatusAtom = atomWithQuery(() => ({
   },
   refetchInterval: 300000,
 }))
+
+
+
+////////////////// proposal atoms
+export const allProposalsAtom = atomWithQuery(() => ({
+  queryKey: ['allProposals',],
+  queryFn: async () => {
+    try {
+      const url = process.env.NEXT_PUBLIC_API_URL
+      const response = await axios.get(`${url}/proposals/list`)
+      return response.data
+    } catch {
+      throw new Error("failed to fetch list of proposals data")
+    }
+  },
+  // refetchInterval: 300000,
+}))
+
+export const proposalIdAtom = atom<number>(0)
+
+export const proposalInfoAtom = atomWithQuery((get) => {
+  const proposalId = get(proposalIdAtom)
+  return {
+    enabled: !!proposalId,
+    queryKey: ["proposalInfo", proposalId],
+    queryFn: async () => {
+      try {
+        const url = process.env.NEXT_PUBLIC_API_URL
+        const response = await axios.get(`${url}/proposals/${proposalId}/info`)
+        return response.data
+      } catch {
+        throw new Error("failed to fetch proposal info data")
+      }
+    },
+  }
+})
+
+export const proposalResultAtom = atomWithQuery((get) => {
+  const proposalId = get(proposalIdAtom)
+  return {
+    enabled: !!proposalId,
+    queryKey: ["proposalResult", proposalId],
+    queryFn: async () => {
+      try {
+        const url = process.env.NEXT_PUBLIC_API_URL
+        const response = await axios.get(`${url}/proposals/${proposalId}/result`)
+        return response.data
+      } catch {
+        throw new Error("failed to fetch proposal result data")
+      }
+    },
+  }
+})
