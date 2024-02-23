@@ -141,3 +141,37 @@ export const proposalResultAtom = atomWithQuery((get) => {
     },
   }
 })
+
+
+
+////////////////// params atoms
+export const chainParamsAtom = atomWithQuery(() => ({
+  queryKey: ['chainParams',],
+  queryFn: async () => {
+    try {
+      const url = process.env.NEXT_PUBLIC_API_URL
+      const response = await axios.get(`${url}/chain/params`)
+      return response.data
+    } catch {
+      throw new Error("failed to fetch chain params data")
+    }
+  },
+  // refetchInterval: 300000,
+}))
+
+
+
+////////////////// shielded assets atoms
+export const shieldedListAtom = atomWithQuery(() => ({
+  queryKey: ['shieldedList',],
+  queryFn: async () => {
+    try {
+      const url = process.env.NEXT_PUBLIC_API_URL
+      const response = await axios.get(`${url}/tx/shielded`)
+      return response.data
+    } catch {
+      throw new Error("failed to fetch list of shielded assets data")
+    }
+  },
+  // refetchInterval: 300000,
+}))
