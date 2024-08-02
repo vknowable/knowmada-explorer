@@ -16,9 +16,9 @@ export default function Footer() {
               <h2 className="inline-block text-xl pb-4 mb-4 border-b-2 text-zinc-400">Source code</h2>
             </div>
             <ul className="leading-8 text-sm">
-              <li>Front end:<a href="#" className="hover:text-zinc-300 transition-all ml-2">https://github.com/vknowable/knowmada-explorer</a></li>
-              <li>Back end:<a href="#" className="hover:text-zinc-300 transition-all ml-2">https://github.com/vknowable/namadexer/tree/extra-endpoints</a></li>
-              <li>Made possible by Namadexer (by Zondax)</li>
+              <li>Front end:<a href="https://github.com/vknowable/knowmada-explorer" className="hover:text-zinc-300 transition-all ml-2">https://github.com/vknowable/knowmada-explorer</a></li>
+              <li>Back end:<a href="https://github.com/vknowable/namada-indexer" className="hover:text-zinc-300 transition-all ml-2">https://github.com/vknowable/namada-indexer</a></li>
+              <li>Based on Namada-Indexer:<a href="https://github.com/anoma/namada-indexer" className="hover:text-zinc-300 transition-all ml-2">https://github.com/anoma/namada-indexer</a></li>
             </ul>
           </div>
           </div>

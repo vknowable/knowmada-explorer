@@ -22,17 +22,16 @@ export default function LatestTransactions({ fullView }: Props) {
 
   if (blockChainData) {
     for (const page of blockChainData?.pages) {
-      for (const block of page) {
-        for (const tx of block.tx_hashes) {
-          if (tx.tx_type !== 'Wrapper') {
-            recentTxs.push({
-              height: block.header.height,
-              time: block.header.time,
-              hash_id: tx.hash_id,
-              tx_type: tx.tx_type,
-              result: "Ok"
-            })
-          }
+      for (const block of page as BlockResponse[]) {
+        for (const tx of block.innerTxs) {
+          // TODO fix placeholders
+          recentTxs.push({
+            height: block.height,
+            time: block.time,
+            hash_id: tx,
+            tx_type: "Inner",
+            result: "Ok"
+          })
         }
       }
     }

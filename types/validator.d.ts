@@ -1,14 +1,41 @@
 type ValidatorInfo = {
-  nam_address: string,
-  tm_address: string,
-  metadata: ValidatorMetadata | null,
-  stake: string | null,
-  commission: CommissionInfo | null,
-  state: string | null,
-  uptime: {
-    uptime: number,
-  },
+  address: string,
+  votingPower: string,
+  maxCommission: string,
+  commission: string,
+  state: string,
+  name: string | null,
+  email: string | null,
+  website: string | null,
+  description: string | null,
+  discordHandle: string | null,
+  avatar: string | null,
+  validatorId: string,
 }
+
+type ValidatorSetResponse = {
+  results: ValidatorInfo[],
+  pagination: ValidatorPagination,
+}
+
+type ValidatorPagination = {
+  page: number,
+  perPage: number,
+  totalPages: number,
+  totalItems: number,
+}
+
+// type ValidatorInfo = {
+//   nam_address: string,
+//   tm_address: string,
+//   metadata: ValidatorMetadata | null,
+//   stake: string | null,
+//   commission: CommissionInfo | null,
+//   state: string | null,
+//   uptime: {
+//     uptime: number,
+//   },
+// }
 
 type ValidatorMetadata = {
   email: string,
@@ -16,6 +43,7 @@ type ValidatorMetadata = {
   website: string | null,
   discord_handle: string | null,
   avatar: string | null,
+  name: string | null,
 }
 
 type CommissionInfo = {

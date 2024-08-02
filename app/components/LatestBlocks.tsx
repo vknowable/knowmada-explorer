@@ -46,7 +46,7 @@ export default function LatestBlocks({ fullView }: Props) {
           </TableHeader>
           <TableBody>
             {blockChainData?.pages?.map(page => page.map((block: BlockResponse, index: number) =>
-              <Block block={block} key={block.block_id + '-' + index} fullView={fullView} />
+              <Block block={block} key={block.id + '-' + index} fullView={fullView} />
             ))}
           </TableBody>
         </Table>
@@ -66,11 +66,11 @@ const Block = ({ block, fullView }: { block: BlockResponse, fullView: boolean })
 
   return (
     <TableRow>
-      <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></TableCell>
-      <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/validators/${block.header.proposer_address}`}>{fullView ? truncateHash(block.header.proposer_address, 8, 8) : truncateHash(block.header.proposer_address, 4, 4)}</Link></TableCell>
-      <TableCell className="text-zinc-300">{fullView ? truncateHash(block.block_id, 8, 8) : truncateHash(block.block_id, 4, 4)}</TableCell>
-      <TableCell className="text-zinc-300">{block.tx_hashes.length}</TableCell>
-      <TableCell className="text-zinc-300">{timeAgo(block.header.time)}</TableCell>
+      <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${block.height}`}>{block.height}</Link></TableCell>
+      <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/validators/${block.proposerAddress}`}>{fullView ? truncateHash(block.proposerAddress, 8, 8) : truncateHash(block.proposerAddress, 4, 4)}</Link></TableCell>
+      <TableCell className="text-zinc-300">{fullView ? truncateHash(block.id, 8, 8) : truncateHash(block.id, 4, 4)}</TableCell>
+      <TableCell className="text-zinc-300">{block.innerTxs.length}</TableCell>
+      <TableCell className="text-zinc-300">{timeAgo(block.time)}</TableCell>
     </TableRow>
   )
 }

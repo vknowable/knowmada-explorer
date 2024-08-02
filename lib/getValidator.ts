@@ -18,9 +18,16 @@ export async function getValidatorUptime(tm_address: string) {
 //   return response.json()
 // }
 
-// gets all consensus validators and associated info
-export async function getConsensusVals() {
+// // gets all consensus validators and associated info
+// export async function getConsensusVals() {
+//   const url = process.env.NEXT_PUBLIC_API_URL
+//   const response = await fetch(`${url}/validator/set`)
+//   return response.json()
+// }
+
+// gets all validators and associated info
+export async function getAllVals() {
   const url = process.env.NEXT_PUBLIC_API_URL
-  const response = await fetch(`${url}/validator/set`)
+  const response = await fetch(`${url}/api/v1/pos/validator/all`)
   return response.json()
 }

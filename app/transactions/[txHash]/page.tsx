@@ -17,13 +17,19 @@ export default async function page({ params: { txHash: hash } }: Props) {
   const txData: Promise<TxResponse> = getTransaction(hash)
   const tx = await txData
 
-  const blockData: Promise<BlockResponse> = getBlockByHash(tx.block_id)
-  const block = await blockData
-  const formattedDate = humanizedTime(block.header.time)
+  // TODO awaiting endpoint
+  // const blockData: Promise<BlockResponse> = getBlockByHash(tx.block_id)
+  // const block = await blockData
+  // const formattedDate = humanizedTime(block.header.time)
+  const formattedDate = humanizedTime("2024-07-28T01:22:05.814543178Z")
+  const blockHeight = 100
 
   // get a more descriptive name than 'Decrypted', ie: Transfer, Bond, etc.
-  const txType: string = tx.tx === null ? "Wrapper" : Object.keys(tx.tx)[0]
+  // const txType: string = tx.tx === null ? "Wrapper" : Object.keys(tx.tx)[0]
+  const txType: string = tx.kind
+  // TODO decode memo
   const txMemo: string = tx.memo ?? ""
+  const txContents = JSON.stringify(JSON.parse(tx.data), null, 2)
 
   return (
     <div className="grid place-items-center mb-12">
@@ -40,10 +46,10 @@ export default async function page({ params: { txHash: hash } }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <InfoRow a="Hash:" b={tx.hash} />
+              <InfoRow a="Hash:" b={tx.txId} />
               <TableRow>
                 <TableCell>Height:</TableCell>
-                <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${block.header.height}`}>{block.header.height}</Link></TableCell>
+                <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/blocks/${blockHeight}`}>{blockHeight}</Link></TableCell>
               </TableRow>
               <InfoRow a="Time:" b={formattedDate} />
               <TableRow>
@@ -64,7 +70,8 @@ export default async function page({ params: { txHash: hash } }: Props) {
         <CardContent>
           <Card className="pt-8">
             <CardContent>
-              <pre>{JSON.stringify(tx.tx, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(tx.data, null, 2)}</pre> */}
+              <pre>{txContents}</pre>
             </CardContent>
           </Card>
         </CardContent>

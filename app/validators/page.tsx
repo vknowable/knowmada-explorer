@@ -18,14 +18,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export default function Validators() {
 
   const [{ data: consensusValsData, isFetchingNextPage, isPending: valsPending, isFetchingPreviousPage, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage, isError, isFetching: valsFetching }] = useAtom(consensusSetResponseAtom);
-  const [{ data: chainStatusData, isPending: statusPending, isError: chainStatusError }] = useAtom(chainStatusAtom)
+  // const [{ data: chainStatusData, isPending: statusPending, isError: chainStatusError }] = useAtom(chainStatusAtom)
   const [currentPage, setCurrentPage] = useState(1)
   const [maxPages, setMaxPages] = useState(1)
 
   useEffect(() => {
     if (consensusValsData?.pages[0]?.pagination !== null && consensusValsData?.pages[0]?.pagination !== undefined) {
-      const total = consensusValsData?.pages[0]?.pagination?.total
-      const per_page = consensusValsData?.pages[0]?.pagination?.per_page
+      const total = consensusValsData?.pages[0]?.pagination?.totalItems
+      const per_page = consensusValsData?.pages[0]?.pagination?.perPage
       setMaxPages(Math.ceil(total / per_page))
       console.log("max", maxPages)
     }
@@ -44,7 +44,7 @@ export default function Validators() {
     setCurrentPage((page) => page - 1)
   };
 
-  if (valsPending || statusPending) {
+  if (valsPending) {
     return (
       <div className="grid place-items-center mb-12">
       <Card className="w-[90%] mt-8">
@@ -59,11 +59,14 @@ export default function Validators() {
     )
   }
 
-  const bonded = parseInt(chainStatusData?.staking_info.bonded_supply)
-  const consensusVals: ValidatorInfo[] = consensusValsData?.pages[currentPage - 1]?.consensus_set ?? []
-  const endIndex = currentPage * consensusValsData?.pages[0]?.pagination.per_page
+  // const bonded = parseInt(chainStatusData?.staking_info.bonded_supply)
+  // TODO placeholders
+  const uptime = 0.5
+  const bonded = 1000000
+  const consensusVals: ValidatorInfo[] = consensusValsData?.pages[currentPage - 1]?.results ?? []
+  const endIndex = currentPage * consensusValsData?.pages[0]?.pagination.perPage
   const startIndex = endIndex - 19
-  const total = consensusValsData?.pages[0]?.pagination.total
+  const total = consensusValsData?.pages[0]?.pagination.totalItems
 
 
   // TODO: include a tab for inactive validators
@@ -98,7 +101,7 @@ export default function Validators() {
           <TableBody>
             {valsFetching ? <div>Checking...</div>
             : consensusVals.map((val: ValidatorInfo, i: number) =>
-              <ValidatorRow key={val.tm_address} validator={val} bonded={bonded} currentPage={currentPage} index={i} perPage={VALS_PER_PAGE} />
+              <ValidatorRow key={`${val.address}-${i}`} validator={val} bonded={bonded} currentPage={currentPage} index={i} perPage={VALS_PER_PAGE} />
             )}
           </TableBody>
         </Table>
@@ -110,15 +113,18 @@ export default function Validators() {
 
 const ValidatorRow = ({ validator, bonded, index, currentPage, perPage }: { validator: ValidatorInfo, bonded: number, index: number, currentPage: number, perPage: number }) => {
   const rank = ((currentPage - 1) * VALS_PER_PAGE) + index + 1
-  const stake = (parseInt(validator.stake ?? "0") / NATIVE_SCALE).toFixed(0)
-  const stakePercent = (parseInt(validator.stake ?? "0") / bonded * 100).toFixed(4)
-  const commission = validator.commission?.commission_rate ? ((parseFloat(validator.commission.commission_rate) * 100).toFixed(2)) : "n/a"
-  const avatarUrl = validator.metadata?.avatar ?? `/assets/Nam_0${Math.floor(Math.random() * 6) + 1}.svg`
+  // const stake = (parseInt(validator.stake ?? "0") / NATIVE_SCALE).toFixed(0)
+  const stake = 100
+  // const stakePercent = (parseInt(validator.stake ?? "0") / bonded * 100).toFixed(4)
+  const stakePercent = 0.1
+  const commission = validator.commission ? ((parseFloat(validator.commission) * 100).toFixed(2)) : "n/a"
+  const avatarUrl = validator.avatar ?? `/assets/Nam_0${Math.floor(Math.random() * 6) + 1}.svg`
   const avatarFallback = `/assets/Nam_0${Math.floor(Math.random() * 6) + 1}.svg`
-  const uptime = (validator.uptime.uptime * 100).toFixed(2)
+  // const uptime = (validator.uptime.uptime * 100).toFixed(2)
+  const uptime = 0.5
   let uptimeColor: string
-  if (validator.uptime.uptime >= 0.8) uptimeColor = "text-green-500"
-  else if (validator.uptime.uptime >= 0.5) uptimeColor = "text-orange-500"
+  if (uptime >= 0.8) uptimeColor = "text-green-500"
+  else if (uptime >= 0.5) uptimeColor = "text-orange-500"
   else uptimeColor = "text-red-500"
 
   return (
@@ -130,7 +136,7 @@ const ValidatorRow = ({ validator, bonded, index, currentPage, perPage }: { vali
           <AvatarImage src={avatarUrl} alt="" className="border-2 border-primary rounded-full" loading="lazy" />
           <AvatarFallback>Nam</AvatarFallback>
         </Avatar>
-        <Link className="text-[#0DD] hover:text-[#0DD]/50 " href={`/validators/${validator.nam_address}`}>{truncateHash(validator.nam_address, 12, 12)}</Link>
+        <Link className="text-[#0DD] hover:text-[#0DD]/50 " href={`/validators/${validator.address}`}>{truncateHash(validator.address, 12, 12)}</Link>
       </TableCell>
       <TableCell className="text-zinc-300">{stake}</TableCell>
       <TableCell><Badge>{stakePercent} %</Badge></TableCell>

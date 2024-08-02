@@ -3,7 +3,8 @@
 import SupplyChart from "./SupplyChart"
 import { NATIVE_SCALE } from "@/lib/helpers"
 import { useAtom } from "jotai"
-import { chainStatusAtom } from "../store/store"
+// import { chainStatusAtom } from "../store/store"
+import { totalVPAtom, chainParamsAtom } from "../store/store"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
 
@@ -11,9 +12,10 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter }
 export default function TokenSupply() {
   const nativeAlias = process.env.NEXT_PUBLIC_NATIVE_TOKEN_ALIAS ?? ""
 
-  const [{ data, isPending, isError }] = useAtom(chainStatusAtom)
+  const [{ data: dataVP, isPending: isPendingVP, isError: isErrorVP }] = useAtom(totalVPAtom)
+  const [{ data: dataParams, isPending: isPendingParams, isError: isErrorParams }] = useAtom(chainParamsAtom)
 
-  if (isPending) {
+  if (isPendingVP || isPendingParams) {
     return (
       <div className="col-span-2 min-w-[100%] min-h-48 flex justify-center">
       <Card className="w-full px-32">
@@ -28,8 +30,16 @@ export default function TokenSupply() {
     )
   }
 
-  const bonded = parseInt(data.staking_info.bonded_supply)
-  const total = parseInt(data.staking_info.total_supply)
+  // const bonded = parseInt(data.staking_info.bonded_supply)
+  // const total = parseInt(data.staking_info.total_supply)
+
+  // const bonded_str = (bonded / NATIVE_SCALE).toFixed(0)
+  // const total_str = (total / NATIVE_SCALE).toFixed(0)
+  // const unbonded = total - bonded
+  // const unbonded_str = (unbonded / NATIVE_SCALE).toFixed(0)
+
+  const bonded = parseInt(dataVP.totalVotingPower)/2
+  const total = parseInt(dataVP.totalVotingPower)
 
   const bonded_str = (bonded / NATIVE_SCALE).toFixed(0)
   const total_str = (total / NATIVE_SCALE).toFixed(0)
@@ -45,7 +55,7 @@ export default function TokenSupply() {
       <CardContent className="flex justify-between gap-24">
         <SupplyChart bonded={bonded} total={total}/>
         <Table>
-          <TableCaption>Native token:<br /><span className="mr-4">{data.staking_info.native_token}</span>(<span className="text-primary mx-1">{nativeAlias}</span>)</TableCaption>
+          <TableCaption>Native token:<br /><span className="mr-4">{dataParams.nativeTokenAddress}</span>(<span className="text-primary mx-1">{nativeAlias}</span>)</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>

@@ -18,21 +18,24 @@ export default async function page({ params: { blockHeight } }: Props) {
   const blockData: Promise<BlockResponse> = getBlockAtHeight(height)
   const block = await blockData
 
-  const signaturesData: Promise<SignaturesResponse> = getSignaturesByBlockHash(block.block_id)
-  const signatures = await signaturesData
+  const signatures: string[] = block.signatures
 
+  // const signaturesData: Promise<SignaturesResponse> = getSignaturesByBlockHash(block.block_id)
+  // const signatures = await signaturesData
+
+  //TODO fix placeholders
   const blockTxs: TxSummary[] = []
-  for (const tx of block.tx_hashes) {
+  for (const tx of block.innerTxs) {
     blockTxs.push({
-      height: block.header.height,
-      time: block.header.time,
+      height: block.height,
+      time: block.time,
       result: "Ok", // TODO: how to find this correctly
-      hash_id: tx.hash_id,
-      tx_type: tx.tx_type,
+      hash_id: tx,
+      tx_type: "Inner",
     })
   }
 
-  const formattedDate = humanizedTime(block.header.time)
+  const formattedDate = humanizedTime(block.time)
 
   return (
     <div className="grid place-items-center mb-12">
@@ -49,11 +52,11 @@ export default async function page({ params: { blockHeight } }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <InfoRow a="Height:" b={block.header.height} />
-              <InfoRow a="Hash:" b={block.block_id} />
+              <InfoRow a="Height:" b={block.height.toString()} />
+              <InfoRow a="Hash:" b={block.id} />
               <TableRow>
                 <TableCell>Proposer:</TableCell>
-                <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/validators/${block.header.proposer_address}`}>{block.header.proposer_address}</Link></TableCell>
+                <TableCell><Link className="text-[#0DD] hover:text-[#0DD]/50" href={`/validators/${block.proposerAddress}`}>{block.proposerAddress}</Link></TableCell>
               </TableRow>
               <InfoRow a="Time:" b={formattedDate} />
             </TableBody>
@@ -69,9 +72,9 @@ export default async function page({ params: { blockHeight } }: Props) {
           <Table>
             <TableHeader><TableHead className="invisible h-0"></TableHead></TableHeader>
             <TableBody>
-              {signatures.signatures.map((signature, index) =>
-                signature.validator_address === null ? <TableRow key={index} className="invisible"></TableRow>
-                  : <SignatureRow key={signature.validator_address} signature={signature.validator_address} />)}
+              {signatures.map((signature, index) =>
+                signature === null ? <TableRow key={index} className="invisible"></TableRow>
+                  : <SignatureRow key={signature} signature={signature.toLowerCase()} />)}
             </TableBody>
           </Table>
         </CardContent>

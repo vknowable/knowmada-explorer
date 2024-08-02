@@ -5,9 +5,15 @@ export async function getLastBlock() {
   return response.json()
 }
 
+// export async function getBlockAtHeight(height: number) {
+//   const url = process.env.NEXT_PUBLIC_API_URL
+//   const response = await fetch(`${url}/block/height/${height}`)
+//   return response.json()
+// }
+
 export async function getBlockAtHeight(height: number) {
   const url = process.env.NEXT_PUBLIC_API_URL
-  const response = await fetch(`${url}/block/height/${height}`)
+  const response = await fetch(`${url}/api/v1/blocks/height/${height}`)
   return response.json()
 }
 
